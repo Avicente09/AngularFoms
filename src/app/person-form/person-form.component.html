@@ -1,0 +1,57 @@
+<div class="container">
+  <div [hidden]="submitted">
+    <h1>Person Reactive Form</h1>
+    <form (ngSubmit)="onSubmit()" #personForm="ngForm">
+
+      <div class="form-group">
+        <label for="name">Name</label>
+        <input type="text" class="form-control" id="name" required [(ngModel)]="model.name" name="name" #name="ngModel">
+        <div [hidden]="name.valid || name.pristine" class="alert alert-danger">
+          Name is required
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="contact">Contact Number</label>
+        <input type="tel" class="form-control" id="contact" required [(ngModel)]="model.contact" name="contact"
+          #contact="ngModel" pattern="\d*" minlength="8" maxlength="8">
+        <div [hidden]="contact.valid || contact.pristine" class="alert alert-danger">
+          Contact number valid is required!
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="emailContact">Contact Email</label>
+        <input type="email" class="form-control" id="emailContact" required [(ngModel)]="model.emailContact"
+          name="emailContact" #emailContact="ngModel" [email]="true">
+        <div [hidden]="emailContact.valid || emailContact.pristine" class="alert alert-danger">
+          Email valid is required
+        </div>
+      </div>
+
+
+      <button type="submit" class="btn btn-success" [disabled]="!personForm.form.valid">Submit</button>
+      <button type="button" class="btn btn-default" (click)="newPerson(); personForm.reset()">Cancel</button>
+
+    </form>
+  </div>
+
+  <div [hidden]="!submitted">
+    <h2>You submitted the following:</h2>
+    <div class="row">
+      <div class="col-xs-3">Name: </div>
+      <div class="col-xs-9">{{ model.name }}</div>
+    </div>
+    <div class="row">
+      <div class="col-xs-3">Contact Number: </div>
+      <div class="col-xs-9">{{ model.contact }}</div>
+    </div>
+    <div class="row">
+      <div class="col-xs-3">Contact Email: </div>
+      <div class="col-xs-9">{{ model.emailContact}}</div>
+    </div>
+    <br>
+    <button class="btn btn-primary" (click)="submitted=false">Edit</button>
+    <button type="button" class="btn btn-default" (click)="newPerson(); personForm.reset()">Cancel</button>
+  </div>
+</div>
